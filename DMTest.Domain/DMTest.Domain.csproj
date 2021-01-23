@@ -9,8 +9,4 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interface\Services\" />
-  </ItemGroup>
-
 </Project>
