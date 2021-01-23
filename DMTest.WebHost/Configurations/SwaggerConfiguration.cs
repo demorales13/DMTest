@@ -13,8 +13,8 @@ namespace DMTest.WebHost.Configurations
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "SUPUESTO PRACTICO BACKEND DEVELOPER .NET",
-                    Description = "API del aplicativo para la prueba BACKEND DEVELOPER .NET, construido en ASP.NET Core 3.1 Web API",
+                    Title = "RULETA DE APUESTAS",
+                    Description = "API del aplicativo RULETA DE APUESTAS, construido en ASP.NET Core 3.1 Web API",
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact
                     {
                         Email = "demorales13@outlook.com",
