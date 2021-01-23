@@ -18,27 +18,53 @@ namespace DMTest.Services.AppServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Roulette>> GetActivesAsync()
+        public async Task<IEnumerable<Roulette>> GetAsync()
         {
-            var empleados = await _unitOfWork.Roulettes.GetAsync(
-                x => x.Status == RouletteStatuses.ACTIVE.StatusId);
+            var roulettes = await _unitOfWork.Roulettes.GetAsync();
 
-            if (empleados == null)
+            if (roulettes == null)
             {
                 throw new TestNotFoundException("No se encontró el recurso");
             }
 
-            return empleados;
+            return roulettes;
+        }
+
+        public async Task<IEnumerable<Roulette>> GetOpenAsync()
+        {
+            var roulettes = await _unitOfWork.Roulettes.GetAsync(
+                x => x.Status == RouletteStatuses.OPENED.StatusId);
+
+            if (roulettes == null)
+            {
+                throw new TestNotFoundException("No se encontró el recurso");
+            }
+
+            return roulettes;
         }
 
         public async Task<Roulette> CreateAsync()
         {
-            var roulette = new Roulette();
+            var roulette = new Roulette
+            {
+                Status = RouletteStatuses.PENDING.StatusId
+            };
             await _unitOfWork.Roulettes.AddAsync(roulette);
+            await _unitOfWork.SaveChangesAsync();
             return roulette;
         }
 
         public async Task CloseAsync(int rouletteId)
+        {
+            await ChangeStatusAsync(rouletteId, RouletteStatuses.CLOSED);
+        }
+
+        public async Task OpenAsync(int rouletteId)
+        {
+            await ChangeStatusAsync(rouletteId, RouletteStatuses.OPENED);
+        }
+
+        public async Task ChangeStatusAsync(int rouletteId, RouletteStatuses status)
         {
             var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
 
@@ -47,9 +73,8 @@ namespace DMTest.Services.AppServices
                 throw new TestNotFoundException("No se encontró el recurso");
             }
 
-            roulette.Status = RouletteStatuses.CLOSED.StatusId;
+            roulette.Status = status.StatusId;
             await _unitOfWork.SaveChangesAsync();
         }
-
     }
 }

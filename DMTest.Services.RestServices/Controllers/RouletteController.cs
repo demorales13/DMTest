@@ -29,6 +29,35 @@ namespace DMTest.Services.RestServices.Controllers
             _rouletteService = rouletteService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            if (!ModelState.IsValid)
+                return ResponseHelper.BadRequest(ModelState);
+
+            try
+            {
+                var rulettes = await _rouletteService.GetAsync();
+                return ResponseHelper.Ok(rulettes);
+            }
+            catch (TestNotFoundException ex)
+            {
+                return ResponseHelper.NotFound(ex);
+            }
+            catch (TestException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (TestAuthException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "");
+                return ResponseHelper.BadRequest(ex);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create()
@@ -60,8 +89,38 @@ namespace DMTest.Services.RestServices.Controllers
             }
         }
 
-        [HttpPatch("/close")]
-        public async Task<IActionResult> Close([FromBody] RouletteCloseViewModel roulette)
+        [HttpPatch("open")]
+        public async Task<IActionResult> Open([FromBody] RouletteChangeStatusViewModel roulette)
+        {
+            if (!ModelState.IsValid)
+                return ResponseHelper.BadRequest(ModelState);
+
+            try
+            {
+                await _rouletteService.OpenAsync(roulette.RouletteId);
+                return ResponseHelper.Ok(roulette);
+            }
+            catch (TestNotFoundException ex)
+            {
+                return ResponseHelper.NotFound(ex);
+            }
+            catch (TestException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (TestAuthException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "");
+                return ResponseHelper.BadRequest(ex);
+            }
+        }
+
+        [HttpPatch("close")]
+        public async Task<IActionResult> Close([FromBody] RouletteChangeStatusViewModel roulette)
         {
             if (!ModelState.IsValid)
                 return ResponseHelper.BadRequest(ModelState);

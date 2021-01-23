@@ -51,9 +51,9 @@ namespace DMTest.WebHost
                 });
             }
 
-            RestServiceConfiguration.Configure(app);
             DatabaseConfiguration.Configure(app);
             SwaggerConfiguration.Configure(app);
+            RestServiceConfiguration.Configure(app);
         }
     }
 }

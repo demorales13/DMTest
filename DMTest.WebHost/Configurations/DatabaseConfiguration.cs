@@ -19,9 +19,8 @@ namespace DMTest.WebHost.Configurations
                 .GetService<IOptions<DataBaseSettings>>()
                 .Value;
 
-            services.AddDbContextPool<DMTestContext>(options =>
-                options.UseInMemoryDatabase(databaseSettings.ContextConnection)
-                .EnableSensitiveDataLogging());
+            services.AddDbContext<DMTestContext>(options =>
+                options.UseInMemoryDatabase(databaseName: databaseSettings.ContextConnection));
 
             return services;
         }

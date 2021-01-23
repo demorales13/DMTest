@@ -7,7 +7,8 @@ namespace DMTest.Domain.Enum
 {
     public class RouletteStatuses
     {
-        public static readonly RouletteStatuses ACTIVE = new RouletteStatuses(1, nameof(ACTIVE));
+        public static readonly RouletteStatuses PENDING = new RouletteStatuses(0, nameof(PENDING));
+        public static readonly RouletteStatuses OPENED = new RouletteStatuses(1, nameof(OPENED));
         public static readonly RouletteStatuses CLOSED = new RouletteStatuses(2, nameof(CLOSED));
 
         public int StatusId { get; private set; }
@@ -21,7 +22,7 @@ namespace DMTest.Domain.Enum
 
         public static IReadOnlyCollection<RouletteStatuses> Get()
         {
-            return new[] { CLOSED, ACTIVE };
+            return new[] { PENDING, OPENED, CLOSED };
         }
 
         public static RouletteStatuses FindBy(int statusId)

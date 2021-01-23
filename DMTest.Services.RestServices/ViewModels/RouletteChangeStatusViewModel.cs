@@ -1,6 +1,6 @@
 ﻿namespace DMTest.Services.RestServices.ViewModels
 {
-    public class RouletteCloseViewModel
+    public class RouletteChangeStatusViewModel
     {
         public int RouletteId { get; set; }
     }

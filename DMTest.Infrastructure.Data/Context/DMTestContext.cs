@@ -1,4 +1,5 @@
 ﻿using DMTest.Domain.Entities;
+using DMTest.Infrastructure.Data.InicializeDatabase;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +10,11 @@ namespace DMTest.Infrastructure.Data
         public DMTestContext(DbContextOptions<DMTestContext> options)
                 : base(options)
         {
-            Database.EnsureCreated();
+            if (Database.EnsureCreated())
+            {
+                var seed = new SeedDatabase(this);
+                seed.Initialize();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

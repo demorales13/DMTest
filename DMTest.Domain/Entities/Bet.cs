@@ -1,7 +1,10 @@
-﻿namespace DMTest.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DMTest.Domain.Entities
 {
     public class Bet
     {
+        [Key]
         public int BetId { get; set; }
         public decimal BetAmount { get; set; }
         public int Number { get; set; }

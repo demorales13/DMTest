@@ -39,11 +39,12 @@ namespace DMTest.Services.RestServices
             });
 
             // Add fluent validation implicit service
-            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RouletteCloseViewModelValidator>());
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RouletteChangeStatusViewModelValidator>());
 
             // Services
             services.AddScoped<IBetServices, BetServices>();
             services.AddScoped<IRouletteService, RouletteService>();
+            services.AddScoped<IUserServices, UserServices>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
