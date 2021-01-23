@@ -20,7 +20,7 @@ namespace DMTest.Services.AppServices
 
         public async Task<IEnumerable<Roulette>> GetAsync()
         {
-            var roulettes = await _unitOfWork.Roulettes.GetAsync();
+            var roulettes = await _unitOfWork.Roulettes.GetAsync(includes: i => i.Bets);
 
             if (roulettes == null)
             {

@@ -7,6 +7,7 @@ namespace DMTest.Domain.Interface.Services
 {
     public interface IBetServices
     {
-        Task<IEnumerable<Bet>> GetByRouletteId(int rouletteId);
+        Task<IEnumerable<Bet>> GetByRouletteIdAsync(int rouletteId);
+        Task<Bet> CreateByColorAsync(Bet bet, int rouletteId);
     }
 }

@@ -9,8 +9,7 @@ namespace DMTest.Services.RestServices.Automapper
     {
         public MappingProfile()
         {
-            CreateMap<Roulette, RouletteChangeStatusViewModel>().ReverseMap();
-            //CreateMap<Departamento, DepartamentoViewModel>().ReverseMap();
+            CreateMap<Bet, BetNumberCreateViewModel>().ReverseMap();
             //CreateMap<Ciudad, CiudadViewModel>().ReverseMap();
             //CreateMap<Empleado, EmpleadoViewModel>().ReverseMap();
             //CreateMap<TipoDocumento, TipoDocumentoViewModel>().ReverseMap();

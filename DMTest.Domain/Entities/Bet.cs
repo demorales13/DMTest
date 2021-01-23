@@ -8,6 +8,7 @@ namespace DMTest.Domain.Entities
         public int BetId { get; set; }
         public decimal BetAmount { get; set; }
         public int Number { get; set; }
+        public int Color { get; set; }
 
         // Navigation properties
         public int UserId { get; set; }

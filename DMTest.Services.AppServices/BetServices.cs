@@ -16,13 +16,28 @@ namespace DMTest.Services.AppServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Bet>> GetByRouletteId(int rouletteId)
+        public async Task<Bet> CreateByColorAsync(Bet bet, int rouletteId)
+        {
+            var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
+            if (roulette == null)
+            {
+                throw new TestNotFoundException("No se encontró el recurso");
+            }
+            roulette.Bets.Add(bet);
+            await _unitOfWork.SaveChangesAsync();
+            return bet;
+        }
+
+
+        public async Task<IEnumerable<Bet>> GetByRouletteIdAsync(int rouletteId)
         {
             var bets = await _unitOfWork.Bets
                 .GetAsync(x => x.RouletteId == rouletteId);
 
             if (bets == null)
-                throw new TestNotFoundException("No se encontraron apuestas");
+            {
+                throw new TestNotFoundException("No se encontró el recurso");
+            }
 
             return bets;
         }

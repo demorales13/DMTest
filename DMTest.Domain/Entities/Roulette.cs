@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DMTest.Domain.Entities
 {
@@ -6,12 +7,16 @@ namespace DMTest.Domain.Entities
     {
         public Roulette()
         {
-
+            Bets = new HashSet<Bet>();
         }
 
         [Key]
         public int RouletteId { get; set; }
 
         public int Status { get; set; }
+
+
+        // Navegation properties
+        public virtual ICollection<Bet> Bets { get; set; }
     }
 }
