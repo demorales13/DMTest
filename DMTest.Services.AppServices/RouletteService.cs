@@ -13,6 +13,11 @@ namespace DMTest.Services.AppServices
     {
         private readonly IUnitOfWork _unitOfWork;
 
+        public RouletteService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public async Task<IEnumerable<Roulette>> GetActivesAsync()
         {
             var empleados = await _unitOfWork.Roulettes.GetAsync(
@@ -20,7 +25,7 @@ namespace DMTest.Services.AppServices
 
             if (empleados == null)
             {
-                throw new TestNotFoundException("No se encontraron empleados");
+                throw new TestNotFoundException("No se encontró el recurso");
             }
 
             return empleados;
@@ -36,6 +41,12 @@ namespace DMTest.Services.AppServices
         public async Task CloseAsync(int rouletteId)
         {
             var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
+
+            if (roulette == null)
+            {
+                throw new TestNotFoundException("No se encontró el recurso");
+            }
+
             roulette.Status = RouletteStatuses.CLOSED.StatusId;
             await _unitOfWork.SaveChangesAsync();
         }

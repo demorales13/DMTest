@@ -7,7 +7,7 @@ namespace DMTest.Services.RestServices.ViewModels.Validations
         public RouletteCloseViewModelValidator()
         {
             RuleFor(vm => vm.RouletteId)
-                .GreaterThan(0).WithMessage("Debe ser mayor a cero");
+                .GreaterThanOrEqualTo(1).WithMessage("Debe ser mayor a cero");
         }
     }
 }

@@ -4,7 +4,7 @@ using DMTest.Domain.Interface;
 using DMTest.Domain.Interface.Services;
 using DMTest.Infrastructure.Data;
 using DMTest.Services.AppServices;
-using DMTest.Services.RestServices.Automapper;
+using DMTest.Services.RestServices.ViewModels.Validations;
 
 using FluentValidation.AspNetCore;
 
@@ -39,7 +39,7 @@ namespace DMTest.Services.RestServices
             });
 
             // Add fluent validation implicit service
-            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<MappingProfile>());
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RouletteCloseViewModelValidator>());
 
             // Services
             services.AddScoped<IBetServices, BetServices>();
