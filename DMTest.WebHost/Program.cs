@@ -37,7 +37,7 @@ namespace DMTest.WebHost
                 {
                     var env = hostingContext.HostingEnvironment;
 
-                    // Preferiblemente se debe user los user secrets
+                    // TODO: should be replaced by a user secret
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                 })

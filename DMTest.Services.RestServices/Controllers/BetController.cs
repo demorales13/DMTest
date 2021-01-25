@@ -39,7 +39,7 @@ namespace DMTest.Services.RestServices.Controllers
 
 
         [HttpPost("number")]
-        public async Task<IActionResult> Post([FromBody] BetNumberCreateViewModel betViewModel)
+        public async Task<IActionResult> CreateByNumber([FromBody] BetNumberCreateViewModel betViewModel)
         {
             if (!ModelState.IsValid)
                 return ResponseHelper.BadRequest(ModelState);
@@ -49,7 +49,40 @@ namespace DMTest.Services.RestServices.Controllers
                 var bet = _mapper.Map<Bet>(betViewModel);
                 bet.UserId = _identity.UserId;
 
-                bet = await _betService.CreateByColorAsync(bet, betViewModel.RouletteId);
+                bet = await _betService.CreateAsync(bet, betViewModel.RouletteId);
+                return ResponseHelper.Ok(bet);
+            }
+            catch (TestNotFoundException ex)
+            {
+                return ResponseHelper.NotFound(ex);
+            }
+            catch (TestException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (TestAuthException ex)
+            {
+                return ResponseHelper.BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "");
+                return ResponseHelper.BadRequest(ex);
+            }
+        }
+
+        [HttpPost("color")]
+        public async Task<IActionResult> CreateByColor([FromBody] BetColorCreateViewModel betViewModel)
+        {
+            if (!ModelState.IsValid)
+                return ResponseHelper.BadRequest(ModelState);
+
+            try
+            {
+                var bet = _mapper.Map<Bet>(betViewModel);
+                bet.UserId = _identity.UserId;
+
+                bet = await _betService.CreateAsync(bet, betViewModel.RouletteId);
                 return ResponseHelper.Ok(bet);
             }
             catch (TestNotFoundException ex)

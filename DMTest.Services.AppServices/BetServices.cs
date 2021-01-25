@@ -1,4 +1,5 @@
 ﻿using DMTest.Domain.Entities;
+using DMTest.Domain.Enum;
 using DMTest.Domain.Exceptions;
 using DMTest.Domain.Interface;
 using DMTest.Domain.Interface.Services;
@@ -16,18 +17,30 @@ namespace DMTest.Services.AppServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Bet> CreateByColorAsync(Bet bet, int rouletteId)
+        public async Task<Bet> CreateAsync(Bet bet, int rouletteId)
         {
+            var hasEnoughBalance = await ValidateUserBalance(bet);
+            if (!hasEnoughBalance)
+            {
+                throw new TestException("El usuario no tiene saldo suficiente");
+            }
+
             var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
             if (roulette == null)
             {
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new TestNotFoundException("La ruleta no existe");
             }
+
+            if (roulette.Status != RouletteStatuses.OPENED.StatusId)
+            {
+                throw new TestException("La ruleta no se encuentra abierta");
+            }
+
             roulette.Bets.Add(bet);
             await _unitOfWork.SaveChangesAsync();
+
             return bet;
         }
-
 
         public async Task<IEnumerable<Bet>> GetByRouletteIdAsync(int rouletteId)
         {
@@ -40,6 +53,25 @@ namespace DMTest.Services.AppServices
             }
 
             return bets;
+        }
+    
+    
+        private async Task<bool> ValidateUserBalance(Bet bet)
+        {
+            var user = await _unitOfWork.Users.FindAsync(bet.UserId);
+            if (user == null)
+            {
+                throw new TestNotFoundException("El usuario no existe");
+            }
+
+            if(user.Balance < bet.BetAmount)
+            {
+                return false;
+            }
+
+            user.Balance = user.Balance - bet.BetAmount;
+
+            return true;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace DMTest.Services.AppServices
                 .GetAsync();
 
             if (users == null)
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new TestNotFoundException("No se encontraron usuarios");
 
             return users;
         }

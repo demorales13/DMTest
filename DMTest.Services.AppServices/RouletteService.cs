@@ -4,6 +4,7 @@ using DMTest.Domain.Exceptions;
 using DMTest.Domain.Interface;
 using DMTest.Domain.Interface.Services;
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace DMTest.Services.AppServices
 
             if (roulettes == null)
             {
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new TestNotFoundException("No se encontraron ruletas");
             }
 
             return roulettes;
@@ -37,7 +38,7 @@ namespace DMTest.Services.AppServices
 
             if (roulettes == null)
             {
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new TestNotFoundException("No se encontraron ruletas abiertas");
             }
 
             return roulettes;
@@ -54,27 +55,69 @@ namespace DMTest.Services.AppServices
             return roulette;
         }
 
-        public async Task CloseAsync(int rouletteId)
+        public async Task<Roulette> CloseAsync(int rouletteId)
         {
-            await ChangeStatusAsync(rouletteId, RouletteStatuses.CLOSED);
+            var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
+            roulette.WinnerNumber = GenerateWinnerNumber();
+            roulette.Status = RouletteStatuses.CLOSED.StatusId;
+
+            var bets = await _unitOfWork.Bets.GetAsync(x => x.RouletteId == rouletteId);
+            foreach (var bet in bets)
+            {
+                var betEdited = await _unitOfWork.Bets.FindAsync(bet.BetId);
+                ValidateBet(betEdited, roulette);
+                if(betEdited.Status == BetStatuses.WON.StatusId)
+                {
+                    var user = await _unitOfWork.Users.FindAsync(betEdited.UserId);
+                    user.Balance = user.Balance + (decimal)betEdited.Prize;
+                }
+            }
+            await _unitOfWork.SaveChangesAsync();
+
+            return await _unitOfWork.Roulettes.GetSingleAsync(x => x.RouletteId == rouletteId,
+                                                                   i => i.Bets);
         }
 
         public async Task OpenAsync(int rouletteId)
-        {
-            await ChangeStatusAsync(rouletteId, RouletteStatuses.OPENED);
-        }
-
-        public async Task ChangeStatusAsync(int rouletteId, RouletteStatuses status)
         {
             var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
 
             if (roulette == null)
             {
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new TestNotFoundException("No se encontró la ruleta");
             }
 
-            roulette.Status = status.StatusId;
+            roulette.Status = RouletteStatuses.OPENED.StatusId;
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        private int GenerateWinnerNumber()
+        {
+            Random random = new Random();
+            return random.Next(0, 36);
+        }
+
+        private void ValidateBet(Bet bet, Roulette roulette)
+        {
+            bet.Status = BetStatuses.LOST.StatusId;
+
+            if (bet.Number != null && roulette.WinnerNumber == bet.Number)
+            {
+                bet.Status = BetStatuses.WON.StatusId;
+                bet.Prize = bet.BetAmount * BetPrizes.NUMBER.Prize;
+            }
+
+            if (bet.Color != null)
+            {
+                var winnerColor = BetColors.FindByNumber((int)roulette.WinnerNumber);
+                var betColor = BetColors.FindById((int)bet.Color);
+
+                if(winnerColor.StatusId == betColor.StatusId)
+                {
+                    bet.Status = BetStatuses.WON.StatusId;
+                    bet.Prize = bet.BetAmount * BetPrizes.COLOR.Prize;
+                }
+            }
         }
     }
 }

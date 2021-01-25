@@ -120,14 +120,14 @@ namespace DMTest.Services.RestServices.Controllers
         }
 
         [HttpPatch("close")]
-        public async Task<IActionResult> Close([FromBody] RouletteChangeStatusViewModel roulette)
+        public async Task<IActionResult> Close([FromBody] RouletteChangeStatusViewModel rouletteViewModel)
         {
             if (!ModelState.IsValid)
                 return ResponseHelper.BadRequest(ModelState);
 
             try
             {
-                await _rouletteService.CloseAsync(roulette.RouletteId);
+                var roulette = await _rouletteService.CloseAsync(rouletteViewModel.RouletteId);
                 return ResponseHelper.Ok(roulette);
             }
             catch (TestNotFoundException ex)

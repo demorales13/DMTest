@@ -21,7 +21,6 @@ namespace DMTest.Domain.Interface.Repositories
         Task AddAsync(IEnumerable<TEntity> entities);
         void Update(TEntity entity, TEntity edited);
         void Remove(TEntity entity);
-        Task<long> CountAsync(Expression<Func<TEntity, bool>> filter = null);
     }
 
 }

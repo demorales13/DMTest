@@ -13,6 +13,8 @@ namespace DMTest.Domain.Entities
         [Key]
         public int RouletteId { get; set; }
 
+        public int? WinnerNumber { get; set; }
+
         public int Status { get; set; }
 
 

@@ -119,15 +119,5 @@ namespace DMTest.Infrastructure.Data.Repositories.Base
             }
             _dbSet.Remove(entity);
         }
-
-        public async Task<long> CountAsync(Expression<Func<TEntity, bool>> filter = null)
-        {
-            IQueryable<TEntity> query = _context.Set<TEntity>();
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return await query.CountAsync();
-        }
     }
 }
