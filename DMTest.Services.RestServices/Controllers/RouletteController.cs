@@ -40,15 +40,15 @@ namespace DMTest.Services.RestServices.Controllers
                 var rulettes = await _rouletteService.GetAsync();
                 return ResponseHelper.Ok(rulettes);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
@@ -70,15 +70,15 @@ namespace DMTest.Services.RestServices.Controllers
                 var roulette = await _rouletteService.CreateAsync();
                 return ResponseHelper.Ok(roulette);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
@@ -100,15 +100,15 @@ namespace DMTest.Services.RestServices.Controllers
                 await _rouletteService.OpenAsync(roulette.RouletteId);
                 return ResponseHelper.Ok(roulette);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
@@ -130,15 +130,15 @@ namespace DMTest.Services.RestServices.Controllers
                 var roulette = await _rouletteService.CloseAsync(rouletteViewModel.RouletteId);
                 return ResponseHelper.Ok(roulette);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }

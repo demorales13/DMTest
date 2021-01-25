@@ -52,15 +52,15 @@ namespace DMTest.Services.RestServices.Controllers
                 bet = await _betService.CreateAsync(bet, betViewModel.RouletteId);
                 return ResponseHelper.Ok(bet);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
@@ -85,15 +85,15 @@ namespace DMTest.Services.RestServices.Controllers
                 bet = await _betService.CreateAsync(bet, betViewModel.RouletteId);
                 return ResponseHelper.Ok(bet);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }

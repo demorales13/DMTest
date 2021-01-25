@@ -32,7 +32,7 @@ namespace DMTest.Domain.Enum
             if (state == null)
             {
                 var values = Get().Select(x => x.StatusId);
-                throw new TestException($"Valor invalido {nameof(BetPrizes)} {statusId}. {string.Join(",", values)}");
+                throw new DMTestException($"Valor invalido {nameof(BetPrizes)} {statusId}. {string.Join(",", values)}");
             }
 
             return state;

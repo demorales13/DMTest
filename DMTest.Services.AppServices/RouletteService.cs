@@ -25,7 +25,7 @@ namespace DMTest.Services.AppServices
 
             if (roulettes == null)
             {
-                throw new TestNotFoundException("No se encontraron ruletas");
+                throw new DMTestNotFoundException("No se encontraron ruletas");
             }
 
             return roulettes;
@@ -38,7 +38,7 @@ namespace DMTest.Services.AppServices
 
             if (roulettes == null)
             {
-                throw new TestNotFoundException("No se encontraron ruletas abiertas");
+                throw new DMTestNotFoundException("No se encontraron ruletas abiertas");
             }
 
             return roulettes;
@@ -84,7 +84,7 @@ namespace DMTest.Services.AppServices
 
             if (roulette == null)
             {
-                throw new TestNotFoundException("No se encontró la ruleta");
+                throw new DMTestNotFoundException("No se encontró la ruleta");
             }
 
             roulette.Status = RouletteStatuses.OPENED.StatusId;

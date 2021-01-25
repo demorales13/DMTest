@@ -22,18 +22,18 @@ namespace DMTest.Services.AppServices
             var hasEnoughBalance = await ValidateUserBalance(bet);
             if (!hasEnoughBalance)
             {
-                throw new TestException("El usuario no tiene saldo suficiente");
+                throw new DMTestException("El usuario no tiene saldo suficiente");
             }
 
             var roulette = await _unitOfWork.Roulettes.FindAsync(rouletteId);
             if (roulette == null)
             {
-                throw new TestNotFoundException("La ruleta no existe");
+                throw new DMTestNotFoundException("La ruleta no existe");
             }
 
             if (roulette.Status != RouletteStatuses.OPENED.StatusId)
             {
-                throw new TestException("La ruleta no se encuentra abierta");
+                throw new DMTestException("La ruleta no se encuentra abierta");
             }
 
             roulette.Bets.Add(bet);
@@ -49,7 +49,7 @@ namespace DMTest.Services.AppServices
 
             if (bets == null)
             {
-                throw new TestNotFoundException("No se encontró el recurso");
+                throw new DMTestNotFoundException("No se encontró el recurso");
             }
 
             return bets;
@@ -61,7 +61,7 @@ namespace DMTest.Services.AppServices
             var user = await _unitOfWork.Users.FindAsync(bet.UserId);
             if (user == null)
             {
-                throw new TestNotFoundException("El usuario no existe");
+                throw new DMTestNotFoundException("El usuario no existe");
             }
 
             if(user.Balance < bet.BetAmount)

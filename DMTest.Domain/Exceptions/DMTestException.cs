@@ -2,18 +2,18 @@
 
 namespace DMTest.Domain.Exceptions
 {
-    public class TestException : Exception
+    public class DMTestException : Exception
     {
-        public TestException()
+        public DMTestException()
         {
         }
 
-        public TestException(string message)
+        public DMTestException(string message)
             : base(message)
         {
         }
 
-        public TestException(string message, Exception innerException)
+        public DMTestException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

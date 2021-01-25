@@ -40,15 +40,15 @@ namespace DMTest.Services.RestServices.Controllers
                 var users = await _userService.GetAsync();
                 return ResponseHelper.Ok(users);
             }
-            catch (TestNotFoundException ex)
+            catch (DMTestNotFoundException ex)
             {
                 return ResponseHelper.NotFound(ex);
             }
-            catch (TestException ex)
+            catch (DMTestException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }
-            catch (TestAuthException ex)
+            catch (DMTestAuthException ex)
             {
                 return ResponseHelper.BadRequest(ex);
             }

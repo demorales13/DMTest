@@ -49,7 +49,7 @@ namespace DMTest.Services.RestServices.Helpers
             });
         }
 
-        public static BadRequestObjectResult BadRequest(TestException ex)
+        public static BadRequestObjectResult BadRequest(DMTestException ex)
         {
             var result = new List<ErrorObjectResult>
             {
@@ -92,7 +92,7 @@ namespace DMTest.Services.RestServices.Helpers
         }
 
 
-        public static BadRequestObjectResult BadRequest(TestAuthException ex)
+        public static BadRequestObjectResult BadRequest(DMTestAuthException ex)
         {
             var result = new List<ErrorObjectResult>
             {
@@ -110,7 +110,7 @@ namespace DMTest.Services.RestServices.Helpers
 
         #region NotFound Response
 
-        public static BadRequestObjectResult NotFound(TestNotFoundException ex)
+        public static BadRequestObjectResult NotFound(DMTestNotFoundException ex)
         {
             var result = new List<ErrorObjectResult>
             {
